@@ -2,6 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Editor, EditorState} from 'draft-js';
 
+const SAVE_COMMAND = 'save';
+
+function keyBinder(e) {
+  console.log(e);
+  if(e.keyCode === 83 && hasCommandModifier(e)) {
+    return SAVE_COMMAND;
+  }
+  return getDefaultKeyBinding(e);
+}
+
 class MonospaceEditor extends React.Component {
  constructor(props) {
    super(props);
@@ -11,11 +21,6 @@ class MonospaceEditor extends React.Component {
    this.onChange = (editorState) => this.setState({editorState});
    this.logState = () => console.log(this.state.editorState.toJS());
 
-   this.handleKeyCommand = (command) => this._handleKeyCommand(command);
- }
-
- _handleKeyCommand(command) {
-   console.log(command);
  }
 
  render() {
